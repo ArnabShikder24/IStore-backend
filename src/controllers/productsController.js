@@ -1,14 +1,14 @@
 const db = require("../database/db");
 
 exports.createProduct = (req, res) => {
-    const { title, price, quantity, img, category, color } = req.body;
+    const { title, price, quantity, img, category, color, description } = req.body;
 
     if (!title || !price || !quantity) {
         return res.status(400).json({ message: "Title, price, and quantity are required fields" });
     }
 
-    const sql = `INSERT INTO products (title, price, quantity, img, category, color) VALUES (?, ?, ?, ?, ?, ?)`;
-    const values = [title, price, quantity, img, category, color];
+    const sql = `INSERT INTO products (title, price, quantity, img, category, color, description) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const values = [title, price, quantity, img, category, color, description];
 
     db.query(sql, values, (err, result) => {
         if (err) {
