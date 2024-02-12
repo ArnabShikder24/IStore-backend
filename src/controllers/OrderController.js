@@ -69,7 +69,7 @@ exports.updateOrderQuantity = (req, res) => {
     const { quantity, order_id, email, subtotal } = req.body;
 
     const sql = `UPDATE \`order\` SET quantity = ${quantity}, subtotal = ${subtotal} WHERE order_id = ${order_id} AND email = '${email}'`;
-
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
 
     db.query(sql, (err, result) => {
         if (err) {
@@ -82,6 +82,6 @@ exports.updateOrderQuantity = (req, res) => {
         }
 
         console.log("Order quantity updated successfully");
-        res.status(200).json({ message: "Order quantity updated successfully" });
+        res.status(200).json({ message: `Order quantity updated successfully, changeId: ${randomNumber}` });
     });
 };
