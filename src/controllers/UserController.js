@@ -37,9 +37,9 @@ exports.getAllUsers = (req, res) => {
 exports.getUserByEmail = (req, res) => {
     const { email } = req.query;
 
-    // if (!email) {
-    //     return res.status(400).json({ message: "Email parameter is required" });
-    // }
+    if (!email) {
+        return res.status(400).json({ message: "Email parameter is required" });
+    }
 
     const sql = "SELECT * FROM users WHERE email = ?";
     const values = [email];

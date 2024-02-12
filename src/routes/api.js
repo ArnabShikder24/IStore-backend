@@ -14,9 +14,11 @@ router.get("/users", UserController.getAllUsers);
 router.get("/user", UserController.getUserByEmail);
 
 router.post("/product", ProductController.createProduct);
+router.get("/product", ProductController.getProductById);
 router.get("/product", ProductController.getAllProducts);
 
 router.post("/order", OrderController.createOrder);
+router.post("/order/update", OrderController.updateOrderQuantity);
 router.get("/order", OrderController.getOrdersByEmail);
 router.get("/orders", OrderController.getAllOrders);
 

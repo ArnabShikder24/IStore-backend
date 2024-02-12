@@ -33,3 +33,22 @@ exports.getAllProducts = (req, res) => {
         res.status(200).json({message: "Product fetch Successfully", data: result});
     });
 };
+
+exports.getProductById = (req, res) => {
+    const { product_id } = req.query;
+
+    const sql = `SELECT * FROM products WHERE product_id = ${product_id}`;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error("Error fetching product:", err);
+            return res.status(500).json({ message: "Failed to fetch product" });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        res.status(200).json({ message: "Product fetched successfully", data: result[0] });
+    });
+};
