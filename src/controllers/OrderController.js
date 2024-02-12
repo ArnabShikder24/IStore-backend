@@ -85,3 +85,24 @@ exports.updateOrderQuantity = (req, res) => {
         res.status(200).json({ message: `Order quantity updated successfully, changeId: ${randomNumber}` });
     });
 };
+
+exports.deleteOrderByemailandid = (req, res) => {
+    const { order_id, email } = req.body;
+
+    const sql = `DELETE FROM \`order\` WHERE order_id = ${order_id} AND email ='${email}'`;
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error("Error deleting order:", err);
+            return res.status(500).json({ message: "Failed to delete order" });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Order not found for the specified email and order ID" });
+        }
+
+        console.log("Order deleted successfully");
+        res.status(200).json({ message: `Order deleted successfully, deleteID= ${randomNumber}` });
+    });
+};
