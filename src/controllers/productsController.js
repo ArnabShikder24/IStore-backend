@@ -7,8 +7,15 @@ exports.createProduct = (req, res) => {
         return res.status(400).json({ message: "Title, price, and quantity are required fields" });
     }
 
+    const parsedPrice = parseFloat(price);
+    const parsedQuantity = parseInt(quantity);
+
+    if (isNaN(parsedPrice) || isNaN(parsedQuantity)) {
+        return res.status(400).json({ message: "Invalid price or quantity format" });
+    }
+
     const sql = `INSERT INTO products (title, price, quantity, img, category, color, description) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const values = [title, price, quantity, img, category, color, description];
+    const values = [title, parsedPrice, parsedQuantity, img, category, color, description];
 
     db.query(sql, values, (err, result) => {
         if (err) {
