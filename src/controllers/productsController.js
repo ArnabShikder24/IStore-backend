@@ -78,3 +78,39 @@ exports.deleteProductById = (req, res) => {
         res.status(200).json({ message: "Product deleted successfully" });
     });
 };
+
+exports.updateProduct = (req, res) => {
+
+    const { product_id, title, price, quantity, img, category, color, description } = req.body;
+
+    if (!title || !price || !quantity) {
+        return res.status(400).json({ message: "Title, price, and quantity are required fields" });
+    }
+
+    const parsedPrice = parseFloat(price);
+    const parsedQuantity = parseInt(quantity);
+
+    if (isNaN(parsedPrice) || isNaN(parsedQuantity)) {
+        return res.status(400).json({ message: "Invalid price or quantity format" });
+    }
+
+    const sql = `UPDATE products 
+                    SET title=?, price=?, quantity=?, img=?, category=?, color=?, description=?
+                    WHERE product_id=?`;
+    const values = [title, parsedPrice, parsedQuantity, img, category, color, description, product_id];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error("Error updating product:", err);
+            return res.status(500).json({ message: "Failed to update product" });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        console.log("Product updated successfully");
+        res.status(200).json({ message: "Product updated successfully" });
+    });
+};
+

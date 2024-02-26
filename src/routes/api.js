@@ -14,6 +14,7 @@ router.get("/users", UserController.getAllUsers);
 router.get("/user", UserController.getUserByEmail);
 
 router.post("/product", ProductController.createProduct);
+router.post("/product/update", ProductController.updateProduct);
 router.get("/products", ProductController.getAllProducts);
 router.get("/product", ProductController.getProductById);
 router.get("/product/delete", ProductController.deleteProductById);
